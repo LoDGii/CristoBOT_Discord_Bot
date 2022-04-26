@@ -8,7 +8,7 @@ import discord
 import random
 
 
-token = "OTY4NDY4ODQyODQ4MzQyMDM2.YmfS5Q.diN8xprKP5TD9AbZnA5p90SoFX8"
+token = "XXXXXXXXXXX"#INSERT YOUR DISCORD TOKEN HERE
 class MyClient(discord.Client):
     async def on_ready(self):
         print('Logged on as {0}!'.format(self.user))
