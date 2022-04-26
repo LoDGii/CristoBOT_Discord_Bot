@@ -8,7 +8,7 @@ import discord
 import random
 
 
-token = "OTY4NDY4ODQyODQ4MzQyMDM2.YmfS5Q.UpOeCC1nw7jXuQRhjW5cYuBj1dY"#INSERT YOUR DISCORD TOKEN HERE
+token = "OTY4NDY4ODQyODQ4MzQyMDM2.YmfS5Q.ZD_N2M-kPUPKnaQNetppk3xXAYw"#INSERT YOUR DISCORD TOKEN HERE
 class MyClient(discord.Client):
     async def on_ready(self):
         print('Logged on as {0}!'.format(self.user))
@@ -17,8 +17,11 @@ class MyClient(discord.Client):
         print('Message from {0.author}: {0.content}'.format(message))
         if message.content == 'Balle?':
             await message.channel.send("Balle!")
-        elif message.content == '?nivel':
+        elif message.content == '!nivel':
             await message.author.send("Qual nivel seu burro? Isto não tem niveis!")
+        elif message.content == '!ja':
+            await message.channel.send("👉 https://dontasktoask.com/pt-pt/")
+
 
     async def on_member_join(self,member):
         guild = member.guild
