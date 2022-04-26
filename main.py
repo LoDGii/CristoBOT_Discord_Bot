@@ -8,7 +8,7 @@ import discord
 import random
 
 
-token = "XXXXXXXXXXX"#INSERT YOUR DISCORD TOKEN HERE
+token = "OTY4NDY4ODQyODQ4MzQyMDM2.YmfS5Q.UpOeCC1nw7jXuQRhjW5cYuBj1dY"#INSERT YOUR DISCORD TOKEN HERE
 class MyClient(discord.Client):
     async def on_ready(self):
         print('Logged on as {0}!'.format(self.user))
@@ -20,11 +20,11 @@ class MyClient(discord.Client):
         elif message.content == '?nivel':
             await message.author.send("Qual nivel seu burro? Isto não tem niveis!")
 
-            async def on_member_join(self,member):
-                guild = member.guild
-                if guild.system_channel is not None:
-                    mensagem = f'Bons olhos te vejam {message.author.name}! Não, HTML não é uma linguagem de progamação, ok?'
-                    await guild.system_channel.send(mensagem)
+    async def on_member_join(self,member):
+        guild = member.guild
+        if guild.system_channel is not None:
+            mensagem = f'Bons olhos te vejam {member.mention}! Não, HTML não é uma linguagem de progamação, ok?'
+            await guild.system_channel.send(mensagem)
 
 
 
