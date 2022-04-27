@@ -1,39 +1,82 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
 import os
 import discord
 import random
+import requests
+from discord.ext import commands, tasks
+from decouple import config
 
 
-token = "OTY4NDY4ODQyODQ4MzQyMDM2.YmfS5Q.ZD_N2M-kPUPKnaQNetppk3xXAYw"#INSERT YOUR DISCORD TOKEN HERE
-class MyClient(discord.Client):
-    async def on_ready(self):
-        print('Logged on as {0}!'.format(self.user))
+bot = commands.Bot('!')
 
-    async def on_message(self, message):
-        print('Message from {0.author}: {0.content}'.format(message))
-        if message.content == 'Balle?':
-            await message.channel.send("Balle!")
-        elif message.content == '!nivel':
-            await message.author.send("Qual nivel seu burro? Isto não tem niveis!")
-        elif message.content == '!ja':
-            await message.channel.send("👉 https://dontasktoask.com/pt-pt/")
+@bot.event
+async def on_ready():
+    print(f"CONECTADO COM SUCESSO!\nBem Vindo ao mundo {bot.user}!")
+
+@bot.command(name = "Balle")
+async def send_balle(ctx):
+    name = ctx.author.name
+    response = "Balle!"
+    await ctx.send(response)
+
+@bot.command(name = "calcular")
+async def calculate(ctx, expression):
+    response = eval(expression)
+    await ctx.send("Resultado: " + str(response))
+
+@bot.command(name = "crypto")
+async def binance(ctx, coin, base):
+    #https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR
+    try:
+        response = requests.get(f"https://api.binance.com/api/v3/ticker/price?symbol={coin.upper()}{base.upper()}")
+        data = response.json()
+        price = data.get("price")
+        if price:
+            await ctx.send(f"O valor do par {coin.upper()}/{base.upper()} é: " + str(price) + f" {base.upper()}\nJá dá para me comprar um presuntinho fumado! Ou preferes chumbar a ES2?HEHE")
+        else:
+            await ctx.send("PAR INVALIDO!")
+    except:
+        await ctx.send("API não disponivel no momento 😢")
+
+@bot.command(name = "ajuda")
+async def help(ctx):
+    await ctx.author.send("https://jpst.it/2PAhs")
 
 
-    async def on_member_join(self,member):
-        guild = member.guild
-        if guild.system_channel is not None:
-            mensagem = f'Bons olhos te vejam {member.mention}! Não, HTML não é uma linguagem de progamação, ok?'
-            await guild.system_channel.send(mensagem)
+
+@bot.event
+async def on_ready():
+    Channel = bot.get_channel(968519147480809493)
+    Text= "Roles"
+    Moji = await Channel.send(Text)
+    await Moji.add_reaction('1️⃣')
+    await Moji.add_reaction('2️⃣')
+    await Moji.add_reaction('3️⃣')
+    await Moji.add_reaction('4️⃣')
+
+@bot.event
+async def on_reaction_add(reaction, user):
+    print(reaction.emoji)
+    Channel = bot.get_channel(968519147480809493)
+    if reaction.message.channel.id != Channel.id:
+        return
+    if reaction.emoji == "1️⃣":
+        role = user.guild.get_role(968992230767464468)
+        await user.add_roles(role)
+    elif reaction.emoji == "2️⃣":
+        role = user.guild.get_role(968992330680004679)
+        await user.add_roles(role)
+    elif reaction.emoji == "3️⃣":
+        role = user.guild.get_role(968992446149189722)
+        await user.add_roles(role)
+    elif reaction.emoji == "4️⃣":
+        role = user.guild.get_role(968992582388576306)
+        await user.add_roles(role)
 
 
 
 
-intents = discord.Intents.default()
-intents.members = True
 
-client = MyClient(intents=intents)
-client.run(token)
+
+
+TOKEN = config("TOKEN")
+bot.run(TOKEN)
