@@ -1,4 +1,6 @@
 from discord.ext import commands
+import discord
+
 
 class Reactions(commands.Cog):
     """Works with reactions"""
@@ -7,6 +9,8 @@ class Reactions(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
+        print("BOT INICIADO COM SUCESSO!")
+        await self.bot.change_presence(activity=discord.Game(name="BOT MADE BY DIOGO CARDOSO (https://github.com/LoDGii)"))
         Channel = self.bot.get_channel(968519147480809493)
         Text = "Roles"
         Moji = await Channel.send(Text)
@@ -17,7 +21,6 @@ class Reactions(commands.Cog):
 
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
-        print(reaction.emoji)
         Channel = self.bot.get_channel(968519147480809493)
         if reaction.message.channel.id != Channel.id:
             return
@@ -33,6 +36,7 @@ class Reactions(commands.Cog):
         elif reaction.emoji == "4️⃣":
             role = user.guild.get_role(968992582388576306)
             await user.add_roles(role)
+
 
 
 def setup(bot):

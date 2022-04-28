@@ -10,6 +10,7 @@ bot.load_extension("commands.crypto")
 bot.load_extension("commands.math")
 bot.load_extension("commands.reactions")
 bot.load_extension("commands.talks")
+bot.load_extension("anti_spam")
 
 TOKEN = config("TOKEN")
 bot.run(TOKEN)
